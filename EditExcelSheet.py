@@ -1,25 +1,43 @@
 import openpyxl as xl
-from openpyxl.chart import BarChart, Reference
 
 
-def process_workbook(filename):
+def find_and_replace_workbook(filename, old_word, new_word):
+    """
+    Replace instances of the given old word with the given new word in sheet titles, cell contents of given Excel file
+    :param filename: The name of the file to be edited
+    :param old_word: The word to be searched for, assumed to be capitalized (e.g. 'Shark' not 'shark')
+    :param new_word: The word to replace old_word with, assumed to be capitalized (e.g. 'Whale' not 'WHALE')
+    :return: None
+    """
     wb = xl.load_workbook(filename)
-    sheet = wb['Sheet1']
 
-    for row in range(2, sheet.max_row + 1):
-        cell = sheet.cell(row, 3)
-        corrected_price = cell.value * 0.9
-        corrected_price_cell = sheet.cell(row, 4)
-        corrected_price_cell.value = corrected_price
-
-    values = Reference(sheet,
-                       min_row=2,
-                       max_row=sheet.max_row,
-                       min_col=4,
-                       max_col=4)
-
-    chart = BarChart()
-    chart.add_data(values)
-    sheet.add_chart(chart, 'e2')
+    for sheet in wb.worksheets:
+        sheet.title = find_and_replace(sheet.title, old_word, new_word)
+        for row in range(1, sheet.max_row + 1):
+            for col in range(1, sheet.max_column + 1):
+                cell = sheet.cell(row, col)
+                if isinstance(cell.value, str):
+                    cell.value = find_and_replace(cell.value, old_word, new_word)
 
     wb.save(filename)
+
+
+def find_and_replace(string, old_word, new_word):
+    """
+    Replace instances of the given old word with the given new word in the given string
+    :param string: The string to be searched within
+    :param old_word: The word to search for
+    :param new_word: The word to replace instances of the old word with
+    :return: The inputted string with instances of the old word replaced with instances of the new word
+    """
+    # old -> new
+    lowercase_replaced = string.replace(old_word.lower(), new_word.lower())
+    # OLD -> NEW
+    uppercase_replaced = lowercase_replaced.replace(old_word.upper(), new_word.upper())
+    # Old -> New
+    capitalized_replaced = uppercase_replaced.replace(old_word, new_word)
+
+    return capitalized_replaced
+
+
+find_and_replace_workbook("TestFiles/SHARK.xlsx", "Whale", "Shark")
