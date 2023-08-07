@@ -26,6 +26,10 @@ def pptx_find_and_replace(filename, old_word, new_word):
                     for cell in row.cells:
                         new_text = str_find_and_replace(cell.text, old_word, new_word)
                         cell.text = new_text
+        if slide.has_notes_slide:
+            notes = slide.notes_slide.notes_text_frame
+            notes.text = str_find_and_replace(notes.text, old_word, new_word)
+
     pres.save(filename)
 
 
