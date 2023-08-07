@@ -11,10 +11,10 @@ def document_find_and_replace(filename, old_word, new_word):
     """
     document = Document(filename)
 
-    # TODO: tables
     for paragraph in document.paragraphs:
         for run in paragraph.runs:
-            run.text = string_find_and_replace(run.text, old_word, new_word)
+            if old_word.lower() in run.text.lower():
+                run.text = string_find_and_replace(run.text, old_word, new_word)
 
     for s in document.sections:
         subsection_find_and_replace(s.header, old_word, new_word)
@@ -35,7 +35,8 @@ def document_find_and_replace(filename, old_word, new_word):
 def subsection_find_and_replace(subsection, old_word, new_word):
     for paragraph in subsection.paragraphs:
         for run in paragraph.runs:
-            run.text = string_find_and_replace(run.text, old_word, new_word)
+            if old_word.lower() in run.text.lower():
+                run.text = string_find_and_replace(run.text, old_word, new_word)
 
 
 def string_find_and_replace(string, old_word, new_word):
@@ -56,4 +57,4 @@ def string_find_and_replace(string, old_word, new_word):
     return capitalized_replaced
 
 
-document_find_and_replace("TestFiles/ThisIsAboutAShark.docx", "Whale", "Shark")
+document_find_and_replace("TestFiles/ThisIsAboutAShark.docx", "Shark", "Whale")
