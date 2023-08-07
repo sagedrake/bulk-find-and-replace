@@ -1,15 +1,15 @@
 from docx import Document
 
 
-def docx_find_and_replace(filename, old_word, new_word):
+def docx_find_and_replace(filepath, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in given Word document
-    :param filename: The name of the file to be edited
+    :param filepath: The name of the file to be edited
     :param old_word: The word to be searched for, assumed to be capitalized (e.g. 'Shark' not 'shark')
     :param new_word: The word to replace old_word with, assumed to be capitalized (e.g. 'Whale' not 'WHALE')
     :return: None
     """
-    document = Document(filename)
+    document = Document(filepath)
 
     for paragraph in document.paragraphs:
         for run in paragraph.runs:
@@ -29,7 +29,7 @@ def docx_find_and_replace(filename, old_word, new_word):
             for cell in col.cells:
                 subsection_find_and_replace(cell, old_word, new_word)
 
-    document.save(filename)
+    document.save(filepath)
 
 
 def subsection_find_and_replace(subsection, old_word, new_word):

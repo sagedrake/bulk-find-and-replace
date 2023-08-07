@@ -1,15 +1,15 @@
 import openpyxl as xl
 
 
-def xlsx_find_and_replace(filename, old_word, new_word):
+def xlsx_find_and_replace(filepath, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in sheet titles, cell contents of given Excel file
-    :param filename: The name of the file to be edited
+    :param filepath: The name of the file to be edited
     :param old_word: The word to be searched for, assumed to be capitalized (e.g. 'Shark' not 'shark')
     :param new_word: The word to replace old_word with, assumed to be capitalized (e.g. 'Whale' not 'WHALE')
     :return: None
     """
-    wb = xl.load_workbook(filename)
+    wb = xl.load_workbook(filepath)
 
     for sheet in wb.worksheets:
         sheet.title = str_find_and_replace(sheet.title, old_word, new_word)
@@ -19,7 +19,7 @@ def xlsx_find_and_replace(filename, old_word, new_word):
                 if isinstance(cell.value, str):
                     cell.value = str_find_and_replace(cell.value, old_word, new_word)
 
-    wb.save(filename)
+    wb.save(filepath)
 
 
 def str_find_and_replace(string, old_word, new_word):
