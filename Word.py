@@ -1,7 +1,7 @@
 from docx import Document
 
 
-def document_find_and_replace(filename, old_word, new_word):
+def docx_find_and_replace(filename, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in given Word document
     :param filename: The name of the file to be edited
@@ -57,4 +57,4 @@ def string_find_and_replace(string, old_word, new_word):
     return capitalized_replaced
 
 
-document_find_and_replace("TestFiles/ThisIsAboutAShark.docx", "Shark", "Whale")
+docx_find_and_replace("TestFiles/ThisIsAboutAShark.docx", "Shark", "Whale")

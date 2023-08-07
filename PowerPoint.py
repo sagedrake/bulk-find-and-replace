@@ -1,7 +1,7 @@
 from pptx import Presentation
 
 
-def find_and_replace_presentation(filename, old_word, new_word):
+def pptx_find_and_replace(filename, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in given PowerPoint file
     Based on Sam Redway's and Ricky Gonce's answers on :
@@ -19,17 +19,17 @@ def find_and_replace_presentation(filename, old_word, new_word):
                 for paragraph in text_frame.paragraphs:
                     for run in paragraph.runs:
                         cur_text = run.text
-                        new_text = find_and_replace(cur_text, old_word, new_word)
+                        new_text = str_find_and_replace(cur_text, old_word, new_word)
                         run.text = new_text
             if shape.has_table:
                 for row in shape.table.rows:
                     for cell in row.cells:
-                        new_text = find_and_replace(cell.text, old_word, new_word)
+                        new_text = str_find_and_replace(cell.text, old_word, new_word)
                         cell.text = new_text
     pres.save(filename)
 
 
-def find_and_replace(string, old_word, new_word):
+def str_find_and_replace(string, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in the given string
     :param string: The string to be searched within
@@ -47,4 +47,4 @@ def find_and_replace(string, old_word, new_word):
     return capitalized_replaced
 
 
-find_and_replace_presentation('TestFiles/shark.pptx', 'Whale', 'Shark')
+pptx_find_and_replace('TestFiles/shark.pptx', 'Whale', 'Shark')
