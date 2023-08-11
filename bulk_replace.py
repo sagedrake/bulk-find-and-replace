@@ -1,5 +1,8 @@
 import os
 import glob
+import powerpoint
+import excel
+import word
 
 OLD = "Whale"  # word to find, beginning with a capital
 NEW = "Shark"  # replacement word, beginning with a capital
@@ -7,16 +10,18 @@ FOLDER = 'TestFiles'  # folder to find/replace within
 
 
 def bulk_find_and_replace():
-    # rename_files_and_folders(FOLDER)
-    files_to_edit = find_files(FOLDER)
-    print(files_to_edit)
+    rename_files_and_folders(FOLDER)
 
-    # print files to edit to check if everything works
-
-    # call word.py function for multiple documents
-    # call excel.py function for multiple workbooks
-    # call powerpoint.py function for multiple presentations
-    return
+    files_to_edit = find_files()
+    for filepath in files_to_edit['docx']: 
+        word.docx_find_and_replace(filepath, OLD, NEW)
+        print("completed find and replace within " + filepath)
+    for filepath in files_to_edit['xlsx']:
+        excel.xlsx_find_and_replace(filepath, OLD, NEW)
+        print("completed find and replace within " + filepath)
+    for filepath in files_to_edit['pptx']:
+        powerpoint.pptx_find_and_replace(filepath, OLD, NEW)
+        print("completed find and replace within " + filepath)
 
 
 def rename_files_and_folders(folder):
@@ -32,15 +37,15 @@ def rename_files_and_folders(folder):
             print("renamed " + item + " to " + new_name)
 
 
-def find_files(folder):
+def find_files():
     found_files = {
         "docx": [],
         "pptx": [],
         "xlsx": []
     }
-    os.chdir(folder)
+
     for ext_to_find in found_files:
-        found_files[ext_to_find] = glob.glob('**/*.' + ext_to_find, recursive=True)
+        found_files[ext_to_find] = glob.glob(FOLDER + '/**/*.' + ext_to_find, recursive=True)
 
     return found_files
 

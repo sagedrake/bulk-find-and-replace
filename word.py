@@ -57,4 +57,3 @@ def string_find_and_replace(string, old_word, new_word):
     return capitalized_replaced
 
 
-docx_find_and_replace("TestFiles/ThisIsAboutAShark.docx", "Shark", "Whale")

@@ -50,5 +50,3 @@ def str_find_and_replace(string, old_word, new_word):
 
     return capitalized_replaced
 
-
-pptx_find_and_replace('TestFiles/shark.pptx', 'Whale', 'Shark')
