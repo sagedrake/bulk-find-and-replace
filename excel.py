@@ -1,5 +1,6 @@
 import openpyxl as xl
 import eventlog
+from word import str_find_and_replace
 
 
 def xlsx_find_and_replace(filepath, old_word, new_word):
@@ -21,23 +22,8 @@ def xlsx_find_and_replace(filepath, old_word, new_word):
                     cell.value = str_find_and_replace(cell.value, old_word, new_word)
 
     wb.save(filepath)
-    event_log.log_event("Replaced instances of " + old_word + " within" + filepath)
+    eventlog.log_event("Replaced instances of " + old_word + " within" + filepath)
 
 
-def str_find_and_replace(string, old_word, new_word):
-    """
-    Replace instances of the given old word with the given new word in the given string
-    :param string: The string to be searched within
-    :param old_word: The word to search for
-    :param new_word: The word to replace instances of the old word with
-    :return: The inputted string with instances of the old word replaced with instances of the new word
-    """
-    # old -> new
-    lowercase_replaced = string.replace(old_word.lower(), new_word.lower())
-    # OLD -> NEW
-    uppercase_replaced = lowercase_replaced.replace(old_word.upper(), new_word.upper())
-    # Old -> New
-    capitalized_replaced = uppercase_replaced.replace(old_word, new_word)
 
-    return capitalized_replaced
 

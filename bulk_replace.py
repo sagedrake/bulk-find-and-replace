@@ -30,7 +30,7 @@ def rename_files_and_folders(folder):
         if OLD.lower() in item.lower():
             new_name = str_find_and_replace(item, OLD, NEW)
             os.rename(folder + "/" + item, folder + "/" + new_name)
-            event_log.log_event("renamed " + item + " to " + new_name)
+            eventlog.log_event("renamed " + item + " to " + new_name)
 
 
 def find_files():
@@ -66,5 +66,5 @@ def str_find_and_replace(string, old_word, new_word):
 
 rename_files_and_folders(FOLDER)
 replace_contents_of_files()
-event_log.output_to_file(LOG_OUTPUT_FILE)
+eventlog.output_to_file(LOG_OUTPUT_FILE)
 

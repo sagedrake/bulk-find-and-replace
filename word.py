@@ -1,6 +1,7 @@
 from docx import Document
 import eventlog
 
+
 def docx_find_and_replace(filepath, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in given Word document
@@ -14,7 +15,7 @@ def docx_find_and_replace(filepath, old_word, new_word):
     for paragraph in document.paragraphs:
         for run in paragraph.runs:
             if old_word.lower() in run.text.lower():
-                run.text = string_find_and_replace(run.text, old_word, new_word)
+                run.text = str_find_and_replace(run.text, old_word, new_word)
 
     for s in document.sections:
         subsection_find_and_replace(s.header, old_word, new_word)
@@ -30,17 +31,17 @@ def docx_find_and_replace(filepath, old_word, new_word):
                 subsection_find_and_replace(cell, old_word, new_word)
 
     document.save(filepath)
-    event_log.log_event("Replaced instances of " + old_word + " within" + filepath)
+    eventlog.log_event("Replaced instances of " + old_word + " within" + filepath)
 
 
 def subsection_find_and_replace(subsection, old_word, new_word):
     for paragraph in subsection.paragraphs:
         for run in paragraph.runs:
             if old_word.lower() in run.text.lower():
-                run.text = string_find_and_replace(run.text, old_word, new_word)
+                run.text = str_find_and_replace(run.text, old_word, new_word)
 
 
-def string_find_and_replace(string, old_word, new_word):
+def str_find_and_replace(string, old_word, new_word):
     """
     Replace instances of the given old word with the given new word in the given string
     :param string: The string to be searched within
@@ -56,5 +57,3 @@ def string_find_and_replace(string, old_word, new_word):
     capitalized_replaced = uppercase_replaced.replace(old_word, new_word)
 
     return capitalized_replaced
-
-
