@@ -1,4 +1,5 @@
 import openpyxl as xl
+import eventlog
 
 
 def xlsx_find_and_replace(filepath, old_word, new_word):
@@ -20,6 +21,7 @@ def xlsx_find_and_replace(filepath, old_word, new_word):
                     cell.value = str_find_and_replace(cell.value, old_word, new_word)
 
     wb.save(filepath)
+    event_log.log_event("Replaced instances of " + old_word + " within" + filepath)
 
 
 def str_find_and_replace(string, old_word, new_word):

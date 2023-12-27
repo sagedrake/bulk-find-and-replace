@@ -1,5 +1,5 @@
 from docx import Document
-
+import eventlog
 
 def docx_find_and_replace(filepath, old_word, new_word):
     """
@@ -30,6 +30,7 @@ def docx_find_and_replace(filepath, old_word, new_word):
                 subsection_find_and_replace(cell, old_word, new_word)
 
     document.save(filepath)
+    event_log.log_event("Replaced instances of " + old_word + " within" + filepath)
 
 
 def subsection_find_and_replace(subsection, old_word, new_word):

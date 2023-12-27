@@ -1,0 +1,15 @@
+2023-12-27 10:35:58.846198: renamed SHARK.txt to WHALE.txt
+2023-12-27 10:35:58.848176: renamed sharkssharkssharks to whaleswhaleswhales
+2023-12-27 10:35:58.849175: renamed AnotherSharkFolder to AnotherWhaleFolder
+2023-12-27 10:35:58.850196: renamed fileAboutSharks.txt to fileAboutWhales.txt
+2023-12-27 10:35:58.851176: renamed Here is a shark to Here is a whale
+2023-12-27 10:35:58.852175: renamed shark.pptx to whale.pptx
+2023-12-27 10:35:58.853175: renamed SHARK.xlsx to WHALE.xlsx
+2023-12-27 10:35:58.854174: renamed sharksAreCool.txt to whalesAreCool.txt
+2023-12-27 10:35:58.855174: renamed ThisIsAboutAShark.docx to ThisIsAboutAWhale.docx
+2023-12-27 10:35:58.892003: Replaced instance of Shark withinTestFiles\ThisIsAboutAWhale.docx
+2023-12-27 10:35:58.912995: Replaced instance of Shark withinTestFiles\AnotherWhaleFolder\docxFile.docx
+2023-12-27 10:35:59.017400: Replaced instance of Shark withinTestFiles\WHALE.xlsx
+2023-12-27 10:35:59.044252: Replaced instance of Shark withinTestFiles\Here is a whale\xlsxFile.xlsx
+2023-12-27 10:35:59.101197: Replaced instance of Shark withinTestFiles\whale.pptx
+2023-12-27 10:35:59.135181: Replaced instance of Shark withinTestFiles\AnotherWhaleFolder\whaleswhaleswhales\pptxFile.pptx

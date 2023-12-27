@@ -1,4 +1,5 @@
 from pptx import Presentation
+import eventlog
 
 
 def pptx_find_and_replace(filepath, old_word, new_word):
@@ -31,6 +32,7 @@ def pptx_find_and_replace(filepath, old_word, new_word):
             notes.text = str_find_and_replace(notes.text, old_word, new_word)
 
     pres.save(filepath)
+    event_log.log_event("Replaced instances of " + old_word + " within" + filepath)
 
 
 def str_find_and_replace(string, old_word, new_word):

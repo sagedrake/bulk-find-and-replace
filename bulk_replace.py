@@ -3,25 +3,22 @@ import glob
 import powerpoint
 import excel
 import word
+import eventlog
 
 OLD = "Whale"  # word to find, beginning with a capital
 NEW = "Shark"  # replacement word, beginning with a capital
 FOLDER = 'TestFiles'  # folder to find/replace within
+LOG_OUTPUT_FILE = 'log.txt'
 
 
-def bulk_find_and_replace():
-    rename_files_and_folders(FOLDER)
-
+def replace_contents_of_files():
     files_to_edit = find_files()
     for filepath in files_to_edit['docx']: 
         word.docx_find_and_replace(filepath, OLD, NEW)
-        print("completed find and replace within " + filepath)
     for filepath in files_to_edit['xlsx']:
         excel.xlsx_find_and_replace(filepath, OLD, NEW)
-        print("completed find and replace within " + filepath)
     for filepath in files_to_edit['pptx']:
         powerpoint.pptx_find_and_replace(filepath, OLD, NEW)
-        print("completed find and replace within " + filepath)
 
 
 def rename_files_and_folders(folder):
@@ -30,11 +27,10 @@ def rename_files_and_folders(folder):
         if os.path.isdir(folder + "/" + item):
             rename_files_and_folders(folder + "/" + item)
 
-        # old -> new
         if OLD.lower() in item.lower():
             new_name = str_find_and_replace(item, OLD, NEW)
             os.rename(folder + "/" + item, folder + "/" + new_name)
-            print("renamed " + item + " to " + new_name)
+            event_log.log_event("renamed " + item + " to " + new_name)
 
 
 def find_files():
@@ -67,5 +63,8 @@ def str_find_and_replace(string, old_word, new_word):
 
     return capitalized_replaced
 
-bulk_find_and_replace()
+
+rename_files_and_folders(FOLDER)
+replace_contents_of_files()
+event_log.output_to_file(LOG_OUTPUT_FILE)
 
