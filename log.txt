@@ -1,15 +1,6 @@
-2023-12-27 11:15:11.430730: renamed WHALE.txt to SHARK.txt
-2023-12-27 11:15:11.432730: renamed whaleswhaleswhales to sharkssharkssharks
-2023-12-27 11:15:11.433729: renamed AnotherWhaleFolder to AnotherSharkFolder
-2023-12-27 11:15:11.434750: renamed fileAboutWhales.txt to fileAboutSharks.txt
-2023-12-27 11:15:11.435731: renamed Here is a whale to Here is a shark
-2023-12-27 11:15:11.436731: renamed ThisIsAboutAWhale.docx to ThisIsAboutAShark.docx
-2023-12-27 11:15:11.437730: renamed whale.pptx to shark.pptx
-2023-12-27 11:15:11.438730: renamed WHALE.xlsx to SHARK.xlsx
-2023-12-27 11:15:11.439730: renamed whalesAreCool.txt to sharksAreCool.txt
-2023-12-27 11:15:11.479724: Replaced instances of Whale withinTestFiles\ThisIsAboutAShark.docx
-2023-12-27 11:15:11.500712: Replaced instances of Whale withinTestFiles\AnotherSharkFolder\docxFile.docx
-2023-12-27 11:15:11.596657: Replaced instances of Whale withinTestFiles\SHARK.xlsx
-2023-12-27 11:15:11.619645: Replaced instances of Whale withinTestFiles\Here is a shark\xlsxFile.xlsx
-2023-12-27 11:15:11.673695: Replaced instances of Whale withinTestFiles\shark.pptx
-2023-12-27 11:15:11.707792: Replaced instances of Whale withinTestFiles\AnotherSharkFolder\sharkssharkssharks\pptxFile.pptx
+2023-12-27 17:55:35.951501: Replaced instances of Shark withinTestFiles\ThisIsAboutAWhale.docx
+2023-12-27 17:55:35.984479: Replaced instances of Shark withinTestFiles\AnotherWhaleFolder\docxFile.docx
+2023-12-27 17:55:36.229957: Replaced instances of Shark withinTestFiles\WHALE.xlsx
+2023-12-27 17:55:36.296882: Replaced instances of Shark withinTestFiles\Here is a whale\xlsxFile.xlsx
+2023-12-27 17:55:36.439802: Replaced instances of Shark withinTestFiles\whale.pptx
+2023-12-27 17:55:36.471783: Replaced instances of Shark withinTestFiles\AnotherWhaleFolder\whaleswhaleswhales\pptxFile.pptx

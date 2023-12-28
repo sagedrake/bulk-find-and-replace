@@ -29,6 +29,7 @@ def log_event(description):
     :return: None
     """
     events.append(Event(description))
+    print(description)
 
 
 def output_to_file(filepath):

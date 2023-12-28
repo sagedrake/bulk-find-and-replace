@@ -1,4 +1,5 @@
 from docx import Document
+from docx import opc
 import eventlog
 
 
@@ -10,28 +11,33 @@ def docx_find_and_replace(filepath, old_word, new_word):
     :param new_word: The word to replace old_word with, assumed to be capitalized (e.g. 'Whale' not 'WHALE')
     :return: None
     """
-    document = Document(filepath)
+    try:
+        document = Document(filepath)
 
-    for paragraph in document.paragraphs:
-        for run in paragraph.runs:
-            if old_word.lower() in run.text.lower():
-                run.text = str_find_and_replace(run.text, old_word, new_word)
+        for paragraph in document.paragraphs:
+            for run in paragraph.runs:
+                if old_word.lower() in run.text.lower():
+                    run.text = str_find_and_replace(run.text, old_word, new_word)
 
-    for s in document.sections:
-        subsection_find_and_replace(s.header, old_word, new_word)
-        subsection_find_and_replace(s.footer, old_word, new_word)
-        subsection_find_and_replace(s.first_page_header, old_word, new_word)
-        subsection_find_and_replace(s.first_page_footer, old_word, new_word)
-        subsection_find_and_replace(s.even_page_header, old_word, new_word)
-        subsection_find_and_replace(s.even_page_footer, old_word, new_word)
+        for s in document.sections:
+            subsection_find_and_replace(s.header, old_word, new_word)
+            subsection_find_and_replace(s.footer, old_word, new_word)
+            subsection_find_and_replace(s.first_page_header, old_word, new_word)
+            subsection_find_and_replace(s.first_page_footer, old_word, new_word)
+            subsection_find_and_replace(s.even_page_header, old_word, new_word)
+            subsection_find_and_replace(s.even_page_footer, old_word, new_word)
 
-    for table in document.tables:
-        for col in table.columns:
-            for cell in col.cells:
-                subsection_find_and_replace(cell, old_word, new_word)
+        for table in document.tables:
+            for col in table.columns:
+                for cell in col.cells:
+                    subsection_find_and_replace(cell, old_word, new_word)
 
-    document.save(filepath)
-    eventlog.log_event("Replaced instances of " + old_word + " within" + filepath)
+        document.save(filepath)
+        eventlog.log_event("Replaced instances of " + old_word + " within" + filepath)
+    except PermissionError:
+        eventlog.log_event("ERROR: Could not edit contents of " + filepath + " because this file is already in use.")
+    except opc.exceptions.PackageNotFoundError:
+        eventlog.log_event("ERROR: Could not edit contents of " + filepath + " because this file does not exist.")
 
 
 def subsection_find_and_replace(subsection, old_word, new_word):

@@ -5,20 +5,32 @@ import excel
 import word
 import eventlog
 
-OLD = "Whale"  # word to find, beginning with a capital
-NEW = "Shark"  # replacement word, beginning with a capital
+OLD = "Shark"  # word to find, beginning with a capital
+NEW = "Whale"  # replacement word, beginning with a capital
 FOLDER = 'TestFiles'  # folder to find/replace within
-LOG_OUTPUT_FILE = 'log.txt'
+LOG_OUTPUT_FILE = 'log.txt'  # file path for log output
+FILE_SIZE_LIMIT = 1e9  # file size limit in bytes
 
 
 def replace_contents_of_files():
     files_to_edit = find_files()
-    for filepath in files_to_edit['docx']: 
-        word.docx_find_and_replace(filepath, OLD, NEW)
+    for filepath in files_to_edit['docx']:
+        if not file_too_big(filepath):
+            word.docx_find_and_replace(filepath, OLD, NEW)
     for filepath in files_to_edit['xlsx']:
-        excel.xlsx_find_and_replace(filepath, OLD, NEW)
+        if not file_too_big(filepath):
+            excel.xlsx_find_and_replace(filepath, OLD, NEW)
     for filepath in files_to_edit['pptx']:
-        powerpoint.pptx_find_and_replace(filepath, OLD, NEW)
+        if not file_too_big(filepath):
+            powerpoint.pptx_find_and_replace(filepath, OLD, NEW)
+
+
+def file_too_big(filepath):
+    size = os.path.getsize(filepath)
+    if size > FILE_SIZE_LIMIT:
+        eventlog.log_event("ERROR: Cannot edit contents of " + filepath + " because file exceeds 1Gb limit.")
+        return True
+    return False
 
 
 def rename_files_and_folders(folder):
@@ -29,11 +41,15 @@ def rename_files_and_folders(folder):
 
         if OLD.lower() in item.lower():
             new_name = str_find_and_replace(item, OLD, NEW)
-            os.rename(folder + "/" + item, folder + "/" + new_name)
-            eventlog.log_event("renamed " + item + " to " + new_name)
+            try:
+                os.rename(folder + "/" + item, folder + "/" + new_name)
+                eventlog.log_event("renamed " + item + " to " + new_name)
+            except PermissionError:
+                eventlog.log_event("ERROR: could not rename " + item + " because this file is already in use.")
 
 
 def find_files():
+    """ Return paths of all files ending in .docx, .pptx, or .xlsx in FOLDER or its subdirectories """
     found_files = {
         "docx": [],
         "pptx": [],
@@ -64,7 +80,27 @@ def str_find_and_replace(string, old_word, new_word):
     return capitalized_replaced
 
 
-rename_files_and_folders(FOLDER)
-replace_contents_of_files()
-eventlog.output_to_file(LOG_OUTPUT_FILE)
+def is_capitalized(text):
+    """ Return True if text contains one uppercase letter followed by all lowercase letters, and False otherwise. """
+    return text[:1].isupper() and text[1:].islower()
 
+
+def __main__():
+    """ If constants at top of file are valid, find and replace the specified words within the specified directory. """
+    if not is_capitalized(OLD) or not is_capitalized(NEW):
+        print("Both OLD and NEW must consist of one capital letter followed by all lowercase letters.")
+        print("Your input does not meet this requirement. Please fix it and try again.")
+        return
+
+    if not os.path.isdir(FOLDER):
+        print("The specified directory:" + FOLDER + " does not exist. Please fix this and try again.")
+        return
+
+    try:
+        rename_files_and_folders(FOLDER)
+        replace_contents_of_files()
+    finally:
+        eventlog.output_to_file(LOG_OUTPUT_FILE)
+
+
+__main__()
