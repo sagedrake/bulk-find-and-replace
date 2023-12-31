@@ -41,6 +41,7 @@ def docx_find_and_replace(filepath, old_word, new_word):
 
 
 def subsection_find_and_replace(subsection, old_word, new_word):
+    """ Find and replace old_word with new_word in the given subsection. """
     for paragraph in subsection.paragraphs:
         for run in paragraph.runs:
             if old_word.lower() in run.text.lower():

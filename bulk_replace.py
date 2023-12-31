@@ -5,14 +5,18 @@ import excel
 import word
 import eventlog
 
-OLD = "Shark"  # word to find, beginning with a capital
-NEW = "Whale"  # replacement word, beginning with a capital
-FOLDER = 'TestFiles'  # folder to find/replace within
+OLD = "Whale"  # word to find, beginning with a capital
+NEW = "Shark"  # replacement word, beginning with a capital
+FOLDER = "TestFiles"  # folder to find/replace within
 LOG_OUTPUT_FILE = 'log.txt'  # file path for log output
 FILE_SIZE_LIMIT = 1e9  # file size limit in bytes
 
 
 def replace_contents_of_files():
+    """
+    Find all .docx, .pptx, and .xlsx files and edit their contents -- replacing the old word with the new word
+    :return: None
+    """
     files_to_edit = find_files()
     for filepath in files_to_edit['docx']:
         if not file_too_big(filepath):
@@ -26,6 +30,7 @@ def replace_contents_of_files():
 
 
 def file_too_big(filepath):
+    """ Return True if the file at the given path exceeds the size limit, False otherwise. """
     size = os.path.getsize(filepath)
     if size > FILE_SIZE_LIMIT:
         eventlog.log_event("ERROR: Cannot edit contents of " + filepath + " because file exceeds 1Gb limit.")
@@ -34,6 +39,11 @@ def file_too_big(filepath):
 
 
 def rename_files_and_folders(folder):
+    """
+    Recursively search through given directory and rename items containing the old word, replacing it with the new word.
+    :param folder: The path of the directory to search within
+    :return: None
+    """
     for item in os.listdir(folder):
         # recursion to rename items in inner folders
         if os.path.isdir(folder + "/" + item):
